@@ -46,7 +46,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import com.zacharee1.systemuituner.R
 import com.zacharee1.systemuituner.compose.preferences.layouts.BottomSheetDialogLayout
 import com.zacharee1.systemuituner.compose.rememberMonitorPreferenceState
@@ -65,7 +64,7 @@ fun TestPref() {
         forceEnableAll || it.visible()
     }
 
-    Mdc3Theme {
+    MaterialTheme {
         Surface {
             LazyColumn(
                 modifier = Modifier,

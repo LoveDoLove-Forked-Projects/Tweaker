@@ -91,7 +91,7 @@ class QSTileInfo(
 
         name = name?.replace("(", "")?.replace(")", "")
 
-        return ComponentName.unflattenFromString(name)
+        return name?.let { ComponentName.unflattenFromString(it) }
     }
 
     private fun Context.getCustomDrawable(): Drawable? {

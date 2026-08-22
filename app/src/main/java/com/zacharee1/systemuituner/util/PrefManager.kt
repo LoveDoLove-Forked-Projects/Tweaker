@@ -50,55 +50,55 @@ class PrefManager private constructor(context: Context) : ContextWrapper(context
      * @see [PersistentOption]
      */
     var persistentOptions: HashSet<PersistentOption>
-        get() = HashSet(getStringSet(PERSISTENT_OPTIONS).mapNotNull {
+        get() = HashSet(getStringSet(PERSISTENT_OPTIONS)?.mapNotNull {
             try {
                 PersistentOption.fromString(it)
-            } catch (e: MalformedJsonException) {
+            } catch (_: MalformedJsonException) {
                 null
             }
-        })
+        } ?: setOf())
         set(value) {
             putStringSet(PERSISTENT_OPTIONS, HashSet(value.map { it.toString() }))
         }
 
     var customPersistentOptions: HashSet<CustomPersistentOption>
-        get() = HashSet(getStringSet(CUSTOM_PERSISTENT_OPTIONS).mapNotNull {
+        get() = HashSet(getStringSet(CUSTOM_PERSISTENT_OPTIONS)?.mapNotNull {
             try {
                 CustomPersistentOption.fromString(it)
-            } catch (e: MalformedJsonException) {
+            } catch (_: MalformedJsonException) {
                 null
             }
-        })
+        } ?: setOf())
         set(value) {
             putStringSet(CUSTOM_PERSISTENT_OPTIONS, HashSet(value.map { it.toString() }))
         }
 
     var blacklistedItems: HashSet<String>
-        get() = HashSet(getStringSet(BLACKLISTED_ITEMS))
+        get() = HashSet(getStringSet(BLACKLISTED_ITEMS) ?: setOf())
         set(value) {
             putStringSet(BLACKLISTED_ITEMS, HashSet(value))
         }
 
     var customBlacklistItems: HashSet<CustomBlacklistItemInfo>
-        get() = HashSet(getStringSet(CUSTOM_BLACKLIST_ITEMS).mapNotNull {
+        get() = HashSet(getStringSet(CUSTOM_BLACKLIST_ITEMS)?.mapNotNull {
             try {
                 CustomBlacklistItemInfo.fromString(it)
-            } catch (e: MalformedJsonException) {
+            } catch (_: MalformedJsonException) {
                 null
             }
-        })
+        } ?: setOf())
         set(value) {
             putStringSet(CUSTOM_BLACKLIST_ITEMS, HashSet(value.map { it.toString() }))
         }
 
     var savedOptions: HashSet<SavedOption>
-        get() = HashSet(getStringSet(SAVED_OPTIONS).mapNotNull {
+        get() = HashSet(getStringSet(SAVED_OPTIONS)?.mapNotNull {
             try {
                 SavedOption.fromString(it)
-            } catch (e: MalformedJsonException) {
+            } catch (_: MalformedJsonException) {
                 null
             }
-        })
+        } ?: setOf())
         set(value) {
             putStringSet(SAVED_OPTIONS, HashSet(value.map { it.toString() }))
         }
@@ -213,14 +213,14 @@ class PrefManager private constructor(context: Context) : ContextWrapper(context
     fun getFloat(key: String, def: Float = 0f) = prefs.getFloat(key, def)
     fun getLong(key: String, def: Long = 0L) = prefs.getLong(key, def)
     fun getBoolean(key: String, def: Boolean = false) = prefs.getBoolean(key, def)
-    fun getStringSet(key: String): Set<String> = prefs.getStringSet(key, HashSet<String>())
+    fun getStringSet(key: String): Set<String>? = prefs.getStringSet(key, HashSet<String>())
 
-    fun putString(key: String, value: String?) = prefs.edit().putString(key, value).apply()
-    fun putInt(key: String, value: Int) = prefs.edit().putInt(key, value).apply()
-    fun putFloat(key: String, value: Float) = prefs.edit().putFloat(key, value).apply()
-    fun putLong(key: String, value: Long) = prefs.edit().putLong(key, value).apply()
-    fun putBoolean(key: String, value: Boolean) = prefs.edit().putBoolean(key, value).apply()
-    fun putStringSet(key: String, value: Set<String>) = prefs.edit().putStringSet(key, value).apply()
+    fun putString(key: String, value: String?) = prefs.edit { putString(key, value) }
+    fun putInt(key: String, value: Int) = prefs.edit { putInt(key, value) }
+    fun putFloat(key: String, value: Float) = prefs.edit { putFloat(key, value) }
+    fun putLong(key: String, value: Long) = prefs.edit { putLong(key, value) }
+    fun putBoolean(key: String, value: Boolean) = prefs.edit { putBoolean(key, value) }
+    fun putStringSet(key: String, value: Set<String>) = prefs.edit { putStringSet(key, value) }
 
     fun reset() = prefs.edit { clear() }
 }

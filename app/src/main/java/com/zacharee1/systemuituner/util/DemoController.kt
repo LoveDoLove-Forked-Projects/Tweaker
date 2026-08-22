@@ -240,47 +240,47 @@ class DemoController private constructor(context: Context) : ContextWrapper(cont
         private val wrapped = getSharedPreferences(DEMO_PREFS, Context.MODE_PRIVATE)
 
         val volumeState: String
-            get() = getString(VOLUME_STATE, STATE_HIDE)
+            get() = getString(VOLUME_STATE, STATE_HIDE)!!
         val btState: String
-            get() = getString(BT_STATE, STATE_HIDE)
+            get() = getString(BT_STATE, STATE_HIDE)!!
         val locationState: String
-            get() = getString(LOCATION_STATE, STATE_HIDE)
+            get() = getString(LOCATION_STATE, STATE_HIDE)!!
         val alarmState: String
-            get() = getString(ALARM_STATE, STATE_HIDE)
+            get() = getString(ALARM_STATE, STATE_HIDE)!!
         val syncState: String
-            get() = getString(SYNC_STATE, STATE_HIDE)
+            get() = getString(SYNC_STATE, STATE_HIDE)!!
         val ttyState: String
-            get() = getString(TTY_STATE, STATE_HIDE)
+            get() = getString(TTY_STATE, STATE_HIDE)!!
         val eriState: String
-            get() = getString(ERI_STATE, STATE_HIDE)
+            get() = getString(ERI_STATE, STATE_HIDE)!!
         val secureState: String
-            get() = getString(SECURE_STATE, STATE_HIDE)
+            get() = getString(SECURE_STATE, STATE_HIDE)!!
         val muteState: String
-            get() = getString(MUTE_STATE, STATE_HIDE)
+            get() = getString(MUTE_STATE, STATE_HIDE)!!
         val airplaneState: String
-            get() = getString(AIRPLANE_STATE, STATE_HIDE)
+            get() = getString(AIRPLANE_STATE, STATE_HIDE)!!
         val wifiState: String
-            get() = getString(WIFI_STATE, STATE_HIDE)
+            get() = getString(WIFI_STATE, STATE_HIDE)!!
         val mobileState: String
-            get() = getString(MOBILE_STATE, STATE_HIDE)
+            get() = getString(MOBILE_STATE, STATE_HIDE)!!
         val speakerphoneState: String
-            get() = getString(SPEAKERPHONE_STATE, STATE_HIDE)
+            get() = getString(SPEAKERPHONE_STATE, STATE_HIDE)!!
         val mobileType: String
-            get() = getString(MOBILE_TYPE, MobileTypes.TYPE_NONE)
+            get() = getString(MOBILE_TYPE, MobileTypes.TYPE_NONE)!!
         val clockTime: String
-            get() = getString(CLOCK_TIME, "1200")
+            get() = getString(CLOCK_TIME, "1200")!!
         val barMode: String
-            get() = getString(BAR_MODE, BarModes.MODE_OPAQUE)
+            get() = getString(BAR_MODE, BarModes.MODE_OPAQUE)!!
         val inflateState: String
-            get() = getString(INFLATE_STATE, "false")
+            get() = getString(INFLATE_STATE, "false")!!
         val networkChangeState: String
-            get() = getString(NETWORK_CHANGE_STATE, STATE_HIDE)
+            get() = getString(NETWORK_CHANGE_STATE, STATE_HIDE)!!
         val roamState: String
-            get() = getString(ROAM_STATE, STATE_HIDE)
+            get() = getString(ROAM_STATE, STATE_HIDE)!!
         val mobileActivityMode: String
-            get() = getString(MOBILE_ACTIVITY_MODE, "none")
+            get() = getString(MOBILE_ACTIVITY_MODE, "none")!!
         val wifiActivityMode: String
-            get() = getString(WIFI_ACTIVITY_MODE, "none")
+            get() = getString(WIFI_ACTIVITY_MODE, "none")!!
 
         val wifiLevel: Int
             get() = getFloat(WIFI_LEVEL, 0f).toInt()
@@ -316,7 +316,7 @@ class DemoController private constructor(context: Context) : ContextWrapper(cont
             return wrapped.getLong(key, defValue)
         }
 
-        override fun getString(key: String?, defValue: String?): String {
+        override fun getString(key: String?, defValue: String?): String? {
             return wrapped.getString(key, defValue)
         }
 

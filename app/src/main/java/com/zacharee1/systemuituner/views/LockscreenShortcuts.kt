@@ -64,8 +64,8 @@ class LockscreenShortcuts(context: Context, attrs: AttributeSet) : RecyclerView(
                         }
                     } else {
                         try {
-                            context.packageManager.getApplicationIcon(ComponentName.unflattenFromString(cName)?.packageName)
-                        } catch (e: PackageManager.NameNotFoundException) {
+                            ComponentName.unflattenFromString(cName)?.packageName?.let { context.packageManager.getApplicationIcon(it) }
+                        } catch (_: PackageManager.NameNotFoundException) {
                             null
                         }
                     }
@@ -81,7 +81,7 @@ class LockscreenShortcuts(context: Context, attrs: AttributeSet) : RecyclerView(
                             try {
                                 context.packageManager.getActivityInfoCompat(it)
                                     .loadLabel(context.packageManager)
-                            } catch (e: PackageManager.NameNotFoundException) {
+                            } catch (_: PackageManager.NameNotFoundException) {
                                 null
                             }
                         }

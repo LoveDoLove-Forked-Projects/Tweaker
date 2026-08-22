@@ -113,7 +113,9 @@ fun LockScreenShortcutsLayout() {
                         }
                     } else {
                         try {
-                            context.packageManager.getApplicationIcon(ComponentName.unflattenFromString(component)?.packageName)
+                            ComponentName.unflattenFromString(component)?.packageName?.let {
+                                context.packageManager.getApplicationIcon(it)
+                            }
                         } catch (e: PackageManager.NameNotFoundException) {
                             null
                         }

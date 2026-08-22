@@ -22,7 +22,7 @@ class BillingUtil(private val dialog: DonateDialog) : CoroutineScope by MainScop
                     consumeAsync(purchase.purchaseToken)
                 }
             }
-        }.enablePendingPurchases().build()
+        }.enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()).build()
 
         val dialogBinding = LayoutDonateBinding.bind(dialog.view)
 

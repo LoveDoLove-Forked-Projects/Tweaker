@@ -39,7 +39,7 @@ class SwitchOptionDialog : BaseOptionDialog() {
             isChecked = shouldBeChecked
 
             setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-                override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                     val thisRef = this
 
                     launch {

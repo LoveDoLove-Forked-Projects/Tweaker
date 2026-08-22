@@ -181,9 +181,11 @@ class Manager : Service(), SharedPreferences.OnSharedPreferenceChangeListener, C
             } catch (_: Exception) {}
         }
 
-        override fun onChange(selfChange: Boolean, uri: Uri) {
+        override fun onChange(selfChange: Boolean, uri: Uri?) {
+            uri ?: return
+
             val type = SettingsType.fromString(uri.pathSegments.run { this[lastIndex - 1] })
-            val key = uri.lastPathSegment
+            val key = uri.lastPathSegment ?: return
 
             launch {
                 runComparison(type, key)

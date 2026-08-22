@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @TargetApi(Build.VERSION_CODES.N)
 class HeadsUpTile : CoroutineTileService() {
     private val observer = object : ContentObserver(null) {
-        override fun onChange(selfChange: Boolean, uri: Uri) {
+        override fun onChange(selfChange: Boolean, uri: Uri?) {
             if (uri == Settings.Global.getUriFor(Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED)) {
                 updateState()
             }

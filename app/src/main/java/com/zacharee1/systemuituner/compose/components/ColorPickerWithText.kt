@@ -34,7 +34,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import com.zacharee1.systemuituner.R
 import com.zacharee1.systemuituner.util.hexToColor
 import com.zacharee1.systemuituner.util.hexToColorIntOrNull
@@ -47,7 +46,7 @@ fun ColorPickerPreview() {
         mutableStateOf(Color.Blue)
     }
 
-    Mdc3Theme {
+    MaterialTheme {
         ColorPickerWithText(
             color = color,
             defaultColor = Color.Red,

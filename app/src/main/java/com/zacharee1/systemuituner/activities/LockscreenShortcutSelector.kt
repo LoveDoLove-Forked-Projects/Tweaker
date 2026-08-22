@@ -162,7 +162,7 @@ class LockscreenShortcutSelector : AppCompatActivity(), CoroutineScope by MainSc
         launch {
             val deferred = async {
                 packageManager.getInstalledPackagesCompat(PackageManager.GET_ACTIVITIES)
-                    .filter { it.activities != null && it.activities.isNotEmpty() }
+                    .filter { it.activities != null && it.activities!!.isNotEmpty() }
                     .map { LoadedApplicationInfo(packageManager, it) }
             }
 

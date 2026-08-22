@@ -131,7 +131,7 @@ class ImmersiveListSelector : AppCompatActivity(), CoroutineScope by MainScope()
             val apps = withContext(Dispatchers.IO) {
                 packageManager.getInstalledPackagesCompat(PackageManager.GET_ACTIVITIES)
                     .filter { !it.activities.isNullOrEmpty() }
-                    .map { it.applicationInfo }
+                    .mapNotNull { it.applicationInfo }
                     .map {
                         LoadedAppInfo(
                             label = it.loadLabel(packageManager).toString(),

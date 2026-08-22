@@ -31,6 +31,7 @@ import com.topjohnwu.superuser.Shell
 import com.zacharee1.systemuituner.R
 import java.util.Locale
 import java.util.regex.Pattern
+import androidx.core.net.toUri
 
 val mainHandler = Handler(Looper.getMainLooper())
 
@@ -124,9 +125,9 @@ fun <T> SortedList<T>.toList(): ArrayList<T> {
 fun ApplicationInfo.getColorPrimary(context: Context): Int {
     val res = try {
         context.packageManager.getResourcesForApplication(this)
-    } catch (e: PackageManager.NameNotFoundException) {
+    } catch (_: PackageManager.NameNotFoundException) {
         return 0
-    } ?: return 0
+    }
 
     val theme = res.newTheme()
     val arr = intArrayOf(
@@ -141,15 +142,16 @@ fun ApplicationInfo.getColorPrimary(context: Context): Int {
     var color = 0
 
     try {
-        theme.applyStyle(
-            context.packageManager.run {
-                getActivityInfoCompat(
-                    getLaunchIntentForPackage(packageName)
-                        .component
-                ).theme
-            },
-            true
-        )
+        context.packageManager.run {
+            getLaunchIntentForPackage(packageName)?.component?.let {
+                getActivityInfoCompat(it)
+            }?.theme
+        }?.let {
+            theme.applyStyle(
+                it,
+                true
+            )
+        }
 
         val attrs = theme.obtainStyledAttributes(arr)
 
@@ -251,7 +253,7 @@ fun parseAutoIconBlacklistSlots(alternate: Boolean = false): ArrayList<String> {
 fun Context.launchUrl(url: String) {
     try {
         val browserIntent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            Intent(Intent.ACTION_VIEW, url.toUri())
         startActivity(browserIntent)
     } catch (_: Exception) {
     }
@@ -260,7 +262,7 @@ fun Context.launchUrl(url: String) {
 fun Context.launchEmail(to: String, subject: String) {
     try {
         val intent = Intent(Intent.ACTION_SENDTO)
-        intent.setDataAndType(Uri.parse(createEmailString(to, subject)), "text/plain")
+        intent.setDataAndType(createEmailString(to, subject).toUri(), "text/plain")
 
         startActivity(intent)
     } catch (_: Exception) {
@@ -279,7 +281,7 @@ fun Resources.getStringByName(name: String, pkg: String): String {
 fun String.toIntOrNullOnError(): Int? {
     return try {
         toInt()
-    } catch (e: NumberFormatException) {
+    } catch (_: NumberFormatException) {
         null
     }
 }

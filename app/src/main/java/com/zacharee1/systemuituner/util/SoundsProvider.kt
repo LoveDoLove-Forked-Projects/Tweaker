@@ -27,9 +27,9 @@ abstract class BaseProvider : ContentProvider() {
         )
     }
 
-    protected val deviceProtectedContext: Context by lazy {
+    protected val deviceProtectedContext: Context? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context.createDeviceProtectedStorageContext()
+            context?.createDeviceProtectedStorageContext()
         } else {
             context
         }
@@ -69,18 +69,20 @@ abstract class BaseProvider : ContentProvider() {
         return AssetFileDescriptor.UNKNOWN_LENGTH
     }
 
-    override fun insert(uri: Uri?, initialValues: ContentValues?): Uri? {
+    override fun insert(uri: Uri, initialValues: ContentValues?): Uri? {
         throw RuntimeException("Operation not supported")
     }
 
     override fun update(
-        uri: Uri?, values: ContentValues?, where: String?,
-        whereArgs: Array<String?>?
+        uri: Uri,
+        values: ContentValues?,
+        where: String?,
+        whereArgs: Array<String?>?,
     ): Int {
         throw RuntimeException("Operation not supported")
     }
 
-    override fun delete(uri: Uri?, where: String?, whereArgs: Array<String?>?): Int {
+    override fun delete(uri: Uri, where: String?, whereArgs: Array<String?>?): Int {
         throw RuntimeException("Operation not supported")
     }
 
@@ -104,9 +106,8 @@ class SoundsProvider : BaseProvider() {
 
     @Throws(FileNotFoundException::class)
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
-
-        val root = deviceProtectedContext.filesDir
-        val f = File(root, uri.path).absoluteFile
+        val root = deviceProtectedContext?.filesDir ?: return null
+        val f = uri.path?.let { File(root, it).absoluteFile } ?: return null
         if (!f.path.startsWith(root.path)) {
             throw SecurityException("Resolved path jumped beyond root")
         }
@@ -119,7 +120,7 @@ class SoundsProvider : BaseProvider() {
     override fun getDataLength(uri: Uri?): Long {
         if (uri == null) return 0
 
-        val f = File(deviceProtectedContext.filesDir, uri.path)
+        val f = File(deviceProtectedContext?.filesDir ?: return 0, uri.path ?: return 0)
         return f.length()
     }
 

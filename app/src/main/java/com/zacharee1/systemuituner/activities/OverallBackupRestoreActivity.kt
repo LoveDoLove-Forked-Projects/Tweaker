@@ -15,20 +15,19 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import com.google.gson.reflect.TypeToken
 import com.zacharee1.systemuituner.compose.preferences.PreferenceItem
 import com.zacharee1.systemuituner.R
@@ -132,7 +131,7 @@ class OverallBackupRestoreActivity : AppCompatActivity() {
                 )
             }
 
-            Mdc3Theme {
+            MaterialTheme {
                 Surface {
                     Column(
                         modifier = Modifier
@@ -147,7 +146,7 @@ class OverallBackupRestoreActivity : AppCompatActivity() {
                             navigationIcon = {
                                 IconButton(onClick = { finish() }) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        painter = painterResource(R.drawable.arrow_back_24px),
                                         contentDescription = stringResource(id = R.string.go_back),
                                     )
                                 }
