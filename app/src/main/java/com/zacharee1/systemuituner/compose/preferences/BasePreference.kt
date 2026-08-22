@@ -64,7 +64,7 @@ fun TestPref() {
         forceEnableAll || it.visible()
     }
 
-    MaterialTheme {
+    AppTheme {
         Surface {
             LazyColumn(
                 modifier = Modifier,
