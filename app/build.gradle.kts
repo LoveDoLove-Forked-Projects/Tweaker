@@ -1,18 +1,21 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.bugsnag.android)
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 37
 
     defaultConfig {
         namespace = "com.zacharee1.systemuituner"
         applicationId = "com.zacharee1.systemuituner"
-        minSdk= 23
-        targetSdk = 34
+        minSdk = 23
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 37
         versionCode = 362
         versionName = versionCode.toString()
 
@@ -31,15 +34,6 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf("-Xcontext-receivers")
-    }
-
     androidResources {
         generateLocaleConfig = true
     }
@@ -50,10 +44,17 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs = listOf("-Xcontext-receivers")
+    }
+}
+
 dependencies {
     implementation(fileTree("libs") { include("*.jar") })
 
-    implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
@@ -98,7 +99,6 @@ dependencies {
     implementation(libs.bugsnag.android)
     implementation(libs.relinker)
 
-    implementation(libs.accompanist.themeadapter.material3)
     implementation(libs.accompanist.drawablepainter)
 
     implementation(libs.compose.material3)
